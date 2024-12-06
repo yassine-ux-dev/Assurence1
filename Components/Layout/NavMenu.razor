@@ -1,0 +1,207 @@
+﻿@using System;
+@using BlazorApp.Components.Service
+@inject NavigationManager Navigation
+@inject UserService userService
+
+<head>
+  <link href="Styl.css" rel="stylesheet">
+</head>
+<nav class="relative flex w-full flex-wrap items-center justify-between  shadow-dark-mild dark:bg-neutral-700 "
+  style="height: 90px;background-color:#F5F7FA">
+  <div class="flex w-full flex-wrap items-center justify-between px-2">
+    <div>
+      <a class="mx-10 my-7 flex items-center lg:mb-0 lg:mt-0" href="#">
+        <img class="h-10 w-15" style="margin-top: 1px;" src="/Logo.png" />
+      </a>
+    </div>
+
+    <!-- Hamburger button for mobile view -->
+    <button
+      class="block border-0 bg-transparent px-2 text-black/50 hover:no-underline hover:shadow-none focus:no-underline focus:shadow-none focus:outline-none focus:ring-0 dark:text-neutral-200 lg:hidden"
+      type="button" data-twe-collapse-init data-twe-target="#navbarSupportedContent4"
+      aria-controls="navbarSupportedContent4" aria-expanded="false" aria-label="Toggle navigation">
+      <!-- Hamburger icon -->
+      <span class="[&>svg]:w-7 [&>svg]:stroke-black/50 dark:[&>svg]:stroke-neutral-200">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path fill-rule="evenodd"
+            d="M3 6.75A.75.75 0 013.75 6h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 6.75zM3 12a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75A.75.75 0 013 12zm0 5.25a.75.75 0 01.75-.75h16.5a.75.75 0 010 1.5H3.75a.75.75 0 01-.75-.75z"
+            clip-rule="evenodd" />
+        </svg>
+      </span>
+    </button>
+
+    <!-- Collapsible navbar container -->
+    <div class="!visible mt-2 hidden flex-grow basis-[100%] items-center lg:mt-0 lg:!flex lg:basis-auto"
+      id="navbarSupportedContent4" data-twe-collapse-item>
+      <!-- Left links -->
+      <ul class="list-style-none me-auto flex flex-col ps-0 lg:mt-1 lg:flex-row" data-twe-navbar-nav-ref>
+        @if (userService.IsAuthenticated())
+        {
+          if (userService.GetRoleFromCookie() == "Admin")
+          {
+            <li class="my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2" data-twe-nav-item-ref>
+              <a class="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
+                aria-current="page" href="/TableAppelOffre" data-twe-nav-link-ref style="text-decoration: none;"><b>Admin
+                  interface</b>
+              </a>
+            </li>
+          }
+
+          else
+          {
+            <li class="my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2" data-twe-nav-item-ref>
+              <a class="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
+                aria-current="page" href="/Dashboard" data-twe-nav-link-ref style="text-decoration: none;">
+                <b>Tableau de bord</b>
+              </a>
+            </li>
+
+
+
+            if (userService.GetRoleFromCookie() == "Client")
+            {
+              <li class="my-4 ps-2 lg:my-0 lg:pe-1 lg:ps-2" data-twe-nav-item-ref>
+                <a class="text-black/60 transition duration-200 hover:text-black/80 hover:ease-in-out focus:text-black/80 active:text-black/80 motion-reduce:transition-none dark:text-white/60 dark:hover:text-white/80 dark:focus:text-white/80 dark:active:text-white/80 lg:px-2"
+                  aria-current="page" href="/Publier" data-twe-nav-link-ref style="text-decoration: none;"><b>Editer</b></a>
+              </li>
+            }
+
+          }
+        }
+
+
+
+      </ul>
+      @if (userService.IsAuthenticated())
+      {
+        if (userService.GetRoleFromCookie() == "Client")
+        {
+          <a href="/Mesrelations">
+            <img src="/notification.png" style="margin-right: 20px;">
+          </a>
+
+
+          <a href="/Parametre" class="flex items-center no-underline">
+            <img src="/Hammadi.png" class="h-8 w-15" style="margin-top: -6px;" />
+            <p class="mr-5 mt-1">@UserName</p>
+          </a>
+        }
+        else if (userService.GetRoleFromCookie() == "Fournisseur")
+        {
+          <a href="/Mesrelations">
+            <img src="/notification.png" style="margin-right: 20px;">
+          </a>
+
+
+          <a href="/Profilefournisseur" class="flex items-center no-underline">
+            <img src="/Hammadi.png" class="h-8 w-15" style="margin-top: -6px;" />
+            <p class="mr-5 mt-1">@UserName</p>
+          </a>
+        }
+        else
+        {
+          <img src="/Hammadi.png" class="h-8 w-15" style="margin-top: -6px;" />
+          <p class="mr-5 mt-1">@UserName</p>
+        }
+
+
+        <a href="/conflogout">
+
+          <button type="submit" data-twe-ripple-init data-twe-ripple-color="light"
+            class="me-3 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+            Deconnection
+          </button></a>
+
+
+      }
+      else
+      {
+        <div class="flex items-center mb-2">
+          <a href="/login">
+            <button type="button" data-twe-ripple-init data-twe-ripple-color="light"
+              class="me-3 inline-block rounded px-2 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-primary hover:text-primary-600 focus:text-primary-600 focus:outline-none focus:ring-0 active:text-primary-700 dark:text-secondary-600 dark:hover:text-secondary-500 dark:focus:text-secondary-500 dark:active:text-secondary-500">
+              Login
+            </button>
+          </a>
+          <EditForm Model="@ao" OnValidSubmit="ShowInscriptionModal" FormName="formName">
+
+            <div class="login-interface">
+              <button type="submit" data-twe-ripple-init data-twe-ripple-color="light"
+                class="moving-button me-3 inline-block rounded bg-primary px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong">
+                Sign up for free
+              </button>
+            </div>
+          </EditForm>
+        </div>
+      }
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function ()
+  {
+    const button = document.querySelector('button[data-twe-target="#navbarSupportedContent4"]');
+    const navbar = document.querySelector('#navbarSupportedContent4');
+
+    function toggleNavbarDisplay()
+    {
+      navbar.classList.toggle('hidden');
+      navbar.classList.toggle('flex');
+      navbar.classList.toggle('flex-col'); // Apply flex column layout on toggle
+    }
+
+
+    button.addEventListener('click', toggleNavbarDisplay);
+
+    // Check media query for screen size changes
+    const mediaQuery = window.matchMedia('(max-width: 992px)'); // Adjust breakpoint as needed
+
+    function handleMediaQueryChange(e)
+    {
+      if (e.matches)
+      {
+        // Media query matches, apply flex column layout
+        navbar.classList.add('flex-col');
+        navbar.classList.remove('flex');
+      } else
+      {
+        // Media query doesn't match, reset to default flex row layout
+        navbar.classList.remove('flex-col');
+        navbar.classList.add('flex');
+      }
+    }
+
+
+    // Initial setup based on media query
+    handleMediaQueryChange(mediaQuery);
+
+    // Listen for media query changes
+    mediaQuery.addEventListener('change', handleMediaQueryChange);
+  });
+</script>
+
+
+@code {
+
+  private Brouillon ao { get; set; } = new Brouillon();
+  private string UserName { get; set; }
+  [Parameter] public EventCallback OnShowInscriptionModal { get; set; }
+
+
+  private async Task ShowInscriptionModal()
+  {
+    await OnShowInscriptionModal.InvokeAsync();
+  }
+
+
+  protected override void OnInitialized()
+  {
+    UserName = userService.GetEmailIdFromCookie();
+  }
+}

@@ -1,0 +1,348 @@
+@page "/"
+@using BlazorApp.Components.Service
+@inject UserService userService
+@inject AoService aoService
+@using BlazorApp.Components.Model
+@inject AppDbContext context
+
+@using Microsoft.EntityFrameworkCore.Metadata
+@using static Microsoft.EntityFrameworkCore.DbLoggerCategory
+
+<style>
+  .contact-container {
+    height: 150vh;
+    display: flex;
+    align-items: center;
+    padding-left: 40px;
+    justify-content: space-evenly;
+  }
+
+  .contact-left {
+    display: flex;
+    margin-left: 250px;
+    flex-direction: column;
+    align-items: start;
+    gap: 20px;
+  }
+
+  .contact-left-title h2 {
+    font-weight: 600;
+    color: #a363aa;
+    font-size: 40px;
+    margin-bottom: 5px;
+  }
+
+  .contact-left-title hr {
+    border: none;
+    width: 120px;
+    height: 5px;
+    background-color: #a363aa;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .contact-inputs {
+    width: 400px;
+    height: 50px;
+    border: none;
+    outline: none;
+    padding-left: 25px;
+    font-weight: 500;
+    color: #666;
+    border-radius: 50px;
+  }
+
+  .contact-left InputTextArea {
+    height: 140px;
+    padding-top: 15px;
+    border-radius: 20px;
+    width: 400px;
+
+  }
+
+  .contact-inputs:focus {
+    border: 2px solid #ff99;
+
+  }
+
+  .contact-inputs::placeholder {
+    color: #a9a9a9;
+  }
+
+  .contact-left button {
+    display: flex;
+    align-items: center;
+    padding: 15px 30px;
+    font-size: 16px;
+    color: #fff;
+    gap: 10px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(270deg, #ff994f, #fa6d86);
+    cursor: pointer;
+
+  }
+
+  .contact-left button img {
+    height: 15px;
+
+  }
+
+  .contact-right img {
+    width: 500px;
+  }
+</style>
+
+
+<div class=" mx-auto w-full top-0">
+  <div id="myCarousel" class="carousel slide mx-auto w-full" data-ride="carousel">
+
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner" style="width: 100%;">
+      <div class="carousel-item active top-0">
+        <!-- img -->
+        <svg class="bd-placeholder-img w-full h-auto sm:h-96" style="min-height: 680px ; !important;"
+          preserveAspectRatio="xMidYMin slice" focusable="false" role="img">
+          <!-- Background Rectangle (Optional) -->
+          <rect width="100%" height="100%" fill="#777" />
+
+          <!-- Image Element -->
+          <image xlink:href="/Couverture.jpg" width="100%" height="100%" preserveAspectRatio="xMidYMin slice" />
+
+
+          <div class="container">
+            <div class="carousel-caption text-left " style="padding-top:50px">
+              <h1 class="text-white">Simplifiez vos processus de gestion des appels d'offres et des fournisseurs avec
+                notre plateforme optimisée</h1>
+              <p class="text-white"> Permettre aux clients de soumettre des offres sans effort et de se connecter avec
+                des fournisseurs répondant à leurs besoins, tout en offrant des services à valeur ajoutée aux
+                fournisseurs pour les aider à trouver de nouveaux partenaires.</p>
+            </div>
+          </div>
+        </svg>
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+
+  <div class="mx-auto w-full" style="background-color:#F5F7FA;padding-top:30px"> <!-- Added mx-auto class -->
+
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
+      <div class="text-center mb-3">
+        <div class="mb-3">
+          <img src="/Target.png" class="inline-block h-24 rounded-full" alt="bootcatch carousel blog">
+        </div>
+        <h4>Recevez des offres ciblées</h4>
+      </div>
+      <div class="text-center mb-3">
+        <div class="mb-3">
+          <img src="/Mail.png" class="inline-block h-24 rounded-full" alt="bootcatch carousel blog">
+        </div>
+        <h4>Recevez une notification automatique</h4>
+      </div>
+      <div class="text-center mb-3">
+        <div class="mb-3">
+          <img src="/Time.png" class="inline-block h-24 rounded-full" alt="bootcatch carousel blog">
+        </div>
+        <h4>Gagner du temps</h4>
+        <p>
+        </p>
+      </div>
+      <div class="text-center mb-3">
+        <div class="mb-3">
+          <img src="/Web.png" class="inline-block h-24 rounded-full" alt="bootcatch carousel blog">
+        </div>
+        <h4>Facile à utiliser</h4>
+      </div>
+    </div>
+
+
+  </div>
+
+
+</div>
+
+
+<!-- carousel ends  -->
+<!-- hoizontal blog -->
+<div class=" mx-auto mb-0">
+  <div class=" mb-10 mt-20 mx-auto md:w-2/3 md:flex md:flex-col md:justify-center md:gap-2">
+    <div class="md:flex md:justify-between">
+      <div class="md:w-1/2 md:mr-4 mt-20">
+        <h2 style="color:rgb(0, 0, 14)"> Vos advantages</h2>
+        <br>
+
+        <img src="rond.png" class="h-8 w-15">
+        <p>❝Effectuez une recherche précise des marchés correspondant à votre activité grâce à un moteur multicritère❞
+        </p>
+        <br><br>
+        <img src="numero-2.png" class="h-8 w-15">
+        <p>❝Personnalisez vos alertes emails pour rester toujours informé des nouvelles opportunités.❞
+        </p>
+        <br><br>
+        <img src="trois.png" class="h-8 w-15">
+        <p>❝Avec un plug-in large événementiel d'offres à votre disposition, vous avez toutes les chances de découvrir
+          les changements de direction majeurs dans vos marchés cibles❞
+        </p>
+        <br>
+        <div>
+          <EditForm Model="@ao" OnValidSubmit="HandleSubmit" FormName="ha">
+            <button
+              class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 border border-gray-500">S'inscrire</button>
+          </EditForm>
+        </div>
+
+        <!-- Your content here -->
+      </div>
+
+      <div class="md:w-1/2 mt-4 md:mt-0">
+        <img src="/City.png" class="w-full" alt="bootcatch carousel blog">
+      </div>
+    </div>
+
+  </div>
+
+  <div style="height:100px"></div>
+  <div class="card mb-0">
+    <div class="card-body" style="background-color:#ffffff">
+      <div class="row flex mb-0">
+        <div class="contact-left flex-1" style="border-radius: 0.375rem;">
+          <EditForm Model="@ao" OnValidSubmit="@AddAO" FormName="Posttd" class="w-full" method="post">
+            <DataAnnotationsValidator />
+
+            <div class="w-full md:w-1/2 md:pr-12" style="padding:0px; padding-left:20px;">
+              <div class="mb-4">
+                <div class="mb-8">
+                  <label>
+                    <h2>Posez votre question ici</h2>
+                  </label>
+                </div>
+
+                <InputText type="text"
+                  class="w-80 h-10 border border-gray-300 outline-none pl-6 font-medium text-gray-600 rounded-full"
+                  placeholder="Enter full name" required @bind-Value="ao.FirstName" />
+              </div>
+
+              <div class="input-box address mb-4">
+                <label></label>
+                <InputText type="text"
+                  class="w-80 h-10 border border-gray-300 outline-none pl-6 font-medium text-gray-600 rounded-full"
+                  placeholder="Enter street address" required @bind-Value="ao.Email" />
+                <ValidationMessage For="() => ao.Email" />
+              </div>
+
+              <div class="input-box">
+                <label></label>
+                <InputTextArea id="message" @bind-Value="ao.Comment" required rows="4"
+                  class="w-full h-36 border border-gray-300 rounded-2xl p-4 text-gray-600 placeholder-gray-400 focus:border-blue-300 whitespace-normal ..."
+                  placeholder="Write your thoughts here...">
+                </InputTextArea>
+                <ValidationMessage For="() => ao.Comment" />
+              </div>
+
+              <br>
+              <button type="submit"
+                class="flex items-center px-3 py-3 text-lg font-semibold text-white rounded-full bg-blue-500 hover:bg-blue-600 cursor-pointer">
+                Envoyer
+                <img src="/arrow_icon.png" alt="" class="h-4 ml-2">
+              </button>
+            </div>
+          </EditForm>
+        </div>
+        <div class="contact-right flex-1">
+          <img src="/right_img.png" alt="">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+@if (Inscrire)
+{
+  <div class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50"
+    style="width: @Inscrire ? '250px' : 'auto'; z-index: 100000;">
+    <div class="relative bg-gray-200 p-5 max-w-lg w-full rounded-lg shadow-lg">
+      <form>
+        <EditForm Model="@ao" OnValidSubmit="HideInscriptionModal">
+
+          <button type="submit" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700 closeBtn">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"
+              class="w-4 h-4">
+              <path
+                d="M13.2328 2.7672C12.9984 2.53282 12.6187 2.53282 12.3843 2.7672L7.99993 7.1516L3.61553 2.7672C3.38115 2.53282 3.00147 2.53282 2.76709 2.7672C2.53271 3.00158 2.53271 3.38126 2.76709 3.61564L7.15149 8.00004L2.76709 12.3844C2.53271 12.6188 2.53271 12.9985 2.76709 13.2329C3.00147 13.4673 3.38115 13.4673 3.61553 13.2329L7.99993 8.84848L12.3843 13.2329C12.6187 13.4673 12.9984 13.4673 13.2328 13.2329C13.4672 12.9985 13.4672 12.6188 13.2328 12.3844L8.84837 8.00004L13.2328 3.61564C13.4672 3.38126 13.4672 3.00158 13.2328 2.7672Z"
+                fill="currentColor"></path>
+            </svg>
+          </button>
+        </EditForm>
+      </form>
+
+      <div class="text-center">
+        <div class="text-xl lg:text-2xl font-bold text-secondary-base mb-4">S’inscrire</div>
+        <div class="text-gray-600 mb-6">Bénéficiez de tous les services de Marchés Online</div>
+        <div class="mb-6">
+          <a href="/logupFournisseur">
+            <button
+              class="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline">Je
+              suis une société d'assurance</button>
+          </a>
+        </div>
+        <div class="mb-6">
+          <a href="/logupClient">
+            <button
+              class="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:shadow-outline">Je
+              suis un Client</button>
+          </a>
+        </div>
+        <div class="text-sm text-gray-600 mt-6">
+          <div class="flex justify-center">
+            <a class="text-primary-base hover:underline" href="/Login">J’ai déjà un compte</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+@code {
+  private bool Inscrire = false;
+
+
+
+  [SupplyParameterFromForm]
+  private DemoRequestModel ao { get; set; } = new DemoRequestModel();
+
+  private void ClearForm() => ao = new DemoRequestModel();
+  protected override async Task OnInitializedAsync()
+  { ao ??= new(); }
+  private async Task AddAO()
+  {
+
+
+    await aoService.AddCo(ao);
+
+    ClearForm();
+
+  }
+
+  private void HideInscriptionModal()
+  {
+    Inscrire = false;
+  }
+  private void HandleSubmit()
+  {
+    Inscrire = true;
+  }
+}

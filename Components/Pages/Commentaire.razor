@@ -1,0 +1,93 @@
+@page "/Comment"
+@using BlazorApp.Components.Service
+@inject UserService userService
+@using BlazorApp.Components.Model
+@inject AppDbContext context
+@inject AoService aoService
+
+<style>
+  body {
+    background: linear-gradient(#ffdad5, #fff7f9);
+  }
+</style>
+
+<EditForm Model="@ao" OnValidSubmit="@AddAO" FormName="Posttd" class="w-full" method="post">
+  <DataAnnotationsValidator />
+
+  <div class="bg-white  md:mt-20 flex flex-col md:flex-row items-center p-20"
+    style="margin-top: 130px; gap-10 height:100%;    background: linear-gradient(#ffdad5, #fff7f9);">
+
+    <div class="contact-left w-full md:w-1/2 md:pr-12" style="padding:0px; padding-left:20px;">
+      <h3 class="text-4xl font-bold text-gray-900 leading-tight mb-4">
+        Demande d'appel d'offre
+      </h3>
+
+      <div class="mb-4">
+        <label></label>
+        <InputText type="text"
+          class="w-[400px] h-[50px] border-none outline-none pl-[25px] font-medium text-gray-600 rounded-full"
+          placeholder="Enter full name" required @bind-Value="ao.FirstName" />
+
+
+      </div>
+      <div class="input-box address mb-4">
+        <label></label>
+        <InputText type="text"
+          class="w-[400px] h-[50px] border-none outline-none pl-[25px] font-medium text-gray-600 rounded-full"
+          placeholder="Enter street address" required @bind-Value="ao.Email" />
+
+        <ValidationMessage For="() => ao.Email" />
+      </div>
+
+      <div class="input-box">
+        <label></label>
+
+        <InputTextArea id="message"
+          class="h-[140px] pt-[15px] w-[400px] rounded-[20px] border-none outline-none px-6 text-gray-600 placeholder-gray-400 focus:border-pink-300"
+          @bind-Value="ao.Comment" required rows="4" placeholder="Write your thoughts here..."></InputTextArea>
+        <ValidationMessage For="() => ao.Comment" />
+      </div>
+
+
+
+
+
+
+
+      <br>
+
+      <button type="submit"
+        class="flex items-center px-6 py-3 text-lg font-semibold text-white rounded-full bg-gradient-to-l from-orange-400 to-pink-500 cursor-pointer">
+        Suivant
+        <img src="/arrow_icon.png" alt="" class="h-4 ml-2">
+      </button>
+    </div>
+
+    <div class="hammas ">
+      <img src="/right_img.png" alt="Image" class="w-[500] rounded-lg " style="height: 500px;margin-left:80px ">
+    </div>
+  </div>
+</EditForm>
+
+
+
+
+@code {
+  [SupplyParameterFromForm]
+
+  private DemoRequestModel ao { get; set; } = new DemoRequestModel();
+
+  private void ClearForm() => ao = new DemoRequestModel();
+
+  private async Task AddAO()
+  {
+    Console.WriteLine("adding " + ao.FirstName);
+
+
+    await aoService.AddCo(ao);
+
+
+
+  }
+
+}

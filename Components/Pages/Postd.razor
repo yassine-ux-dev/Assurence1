@@ -1,0 +1,118 @@
+@page "/post/{Id:int}"
+@page "/po"
+
+@using BlazorApp.Components.Model
+@using Microsoft.EntityFrameworkCore
+@inject AppDbContext context
+@inject NavigationManager Navigation
+@using BlazorApp.Components.Service
+@inject AoService aoService
+@inject UserService userService
+@using System
+
+
+
+
+<div class="flex">
+  <div style="width: 50px" class="timeline-container">
+    <Timeline />
+  </div>
+  <div style="width: 1100px; margin-left: 300px ;margin-top: 100px ; padding: 20px;  ">
+    <EditForm id=" editForm" Model="@ao" OnValidSubmit="()=>AddAO(ao)" FormName="Posttd" class="w-full" method="post">
+      <DataAnnotationsValidator />
+
+      <div
+        class="relative h-[650px] w-[1000px] font-helvetica text-white bg-gray-100   bg-opacity-1 p-0 px-[10px] mr-[1100px] rounded-[20px]">
+
+        <div class="w-full md:pr-10 pl-10">
+          <h3 class="text-4xl font-bold text-gray-900 leading-tight pt-2 mb-4">
+            Demande d'appel d'offre
+          </h3>
+
+          <div class="mb-4">
+            <label>𝘛𝘪𝘵𝘳𝘦</label>
+            <InputText type="text" class="form-control w-full" placeholder="Enter full name" required
+              @bind-Value="ao.Titre" />
+            <ValidationMessage For="() => ao.Titre" />
+          </div>
+          <div class="input-box">
+            <label>𝘋𝘦𝘴𝘤𝘳𝘪𝘱𝘵𝘪𝘰𝘯</label>
+            <InputTextArea id="message" class="form-control w-full" @bind-Value="ao.Description" required rows="4"
+              placeholder="Write your thoughts here..."></InputTextArea>
+            <ValidationMessage For="() => ao.Description" />
+          </div>
+          <div class="column">
+            <div class="input-box">
+              <label>𝘋𝘦𝘭𝘢𝘪𝘴 𝘥𝘦 𝘳𝘦𝘱𝘰𝘯𝘴𝘦</label>
+              <InputDate class="form-control w-full" placeholder="Enter birth date" required @bind-Value="ao.DelaisR" />
+              <ValidationMessage For="() => ao.DelaisR" />
+            </div>
+          </div>
+          <div class="input-box address">
+            <label>Budget</label>
+            <InputNumber type="Number" class="form-control w-full" placeholder="Enter street address" required
+              @bind-Value="ao.Budget" />
+            <ValidationMessage For="() => ao.Budget" />
+          </div>
+          <div class="input-box address">
+            <label>𝘈𝘥𝘥𝘳𝘦𝘴𝘴</label>
+            <InputText type="text" class="form-control w-full" placeholder="Enter street address" required
+              @bind-Value="ao.Adress" />
+            <ValidationMessage For="() => ao.Adress" />
+          </div>
+
+          <br>
+          <div class="flex justify-end" style="margin-top: 20px;">
+
+            <button type="submit"
+              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              style="height: 35px;">
+              Suivant
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:600px;"></div>
+
+
+    </EditForm>
+
+  </div>
+</div>
+
+
+
+
+
+@code {
+  [Parameter]
+  public int Id { get; set; }
+  [SupplyParameterFromForm]
+  private Brouillon? ao { get; set; }
+
+
+
+  private void ClearForm() => ao = new Brouillon();
+  protected override async Task OnInitializedAsync()
+  {
+
+    ao ??= aoService.GetBrbyId(Id);
+
+  }
+  private async Task AddAO(Brouillon ao)
+  {
+    ao.Id = Id;
+    ao.DateDemande = DateTime.Now;
+    ao.EmailA = userService.GetEmailIdFromCookie();
+    await aoService.UpdateBr(ao);
+    Console.WriteLine("adding " + ao.Id);
+    Navigation.NavigateTo("/PF/" + ao.Id);
+  }
+
+
+
+
+
+
+}
